@@ -1,0 +1,17 @@
+schema: mcpg.dev/plugin/v1
+id: dev.mcpg.transform.csv
+name: CSV Transform
+license: Apache-2.0
+description: |
+  Converts between delimited text (CSV/TSV/…) and JSON. `csv_to_json` parses a
+  delimited string into an array of row objects (with a header row) or arrays
+  (headerless); `json_to_csv` serialises an array of objects/arrays back to
+  delimited text with RFC 4180 quoting. As a global transform it reshapes tool
+  arguments (pre-dispatch) and/or results (post-dispatch); as a pipeline
+  `plugin_transform` step it reshapes the previous step's output. An optional
+  JSON Pointer (`pointer`) targets a sub-field, leaving the rest of the payload
+  untouched. Pure compute — no I/O.
+class: transform
+runtime: native-cdylib-v1
+protocol_version: "1.0"
+required_capabilities: []

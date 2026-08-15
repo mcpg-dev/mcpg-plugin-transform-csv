@@ -1,0 +1,36 @@
+[package]
+name = "mcpg-plugin-transform-csv"
+version = "0.1.0-alpha.15"
+license = "Apache-2.0"
+edition = "2024"
+description = """
+CSV / delimited-text transform plugin for mcpg. Converts between delimited
+text (CSV/TSV/semicolon/etc.) and JSON — `csv_to_json` parses a delimited
+string into an array of row objects (or arrays), `json_to_csv` serialises an
+array of objects/arrays back to delimited text. Usable as a global pre/post-
+dispatch transform and (via the pipeline plugin_transform bridge) as a
+pipeline step. An optional JSON Pointer targets a sub-field so the rest of the
+payload is left untouched. Pure compute — no I/O; the gateway core never
+depends on it.
+"""
+
+[lib]
+# cdylib: the .so the gateway's native_loader dlopens. rlib: in-tree unit
+# tests + workspace compile.
+crate-type = ["cdylib", "rlib"]
+
+[features]
+# Default OFF so a plain workspace build emits the rlib (no
+# mcpg_plugin_register) and doesn't clash with the other plugin rlibs.
+default = []
+cdylib-export = []
+static-firstparty = []
+
+[dependencies]
+mcpg-plugin-protocol = { git = "https://github.com/mcpg-dev/mcpg-plugin-protocol", tag = "v0.1.0-beta.13", version = "=0.1.0-beta.13" }
+mcpg-plugin-sdk      = { git = "https://github.com/mcpg-dev/mcpg-plugin-sdk", tag = "v0.1.0-beta.13", version = "=0.1.0-beta.13", features = ["static-firstparty"] }
+serde      = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Pure-Rust delimited-text reader/writer (RFC 4180 quoting). MIT/Unlicense →
+# MIT under the allowlist. No TLS, no system libs.
+csv = "1"
