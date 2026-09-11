@@ -30,7 +30,7 @@ named by a pipeline `plugin_transform` step for a single binding.
 plugins:
   - id: dev.mcpg.transform.csv
     class: transform
-    source: { oci: ghcr.io/mcpg-dev/source-code/plugins/transform-csv:protocol-1 }
+    source: { oci: ghcr.io/mcpg-dev/plugins/transform-csv }
     config:
       direction: csv_to_json
       phase: result
